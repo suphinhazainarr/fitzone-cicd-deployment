@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #09090B;
+  --color-surface: #111111;
+  --color-card: #18181B;
+  --color-primary: #FF4D00;
+  --color-secondary: #FFD700;
+  --color-success: #22C55E;
+  --color-text-primary: #FAFAFA;
+  --color-text-secondary: #A1A1AA;
+  --color-border: #27272A;
+
+  --font-heading: "Bebas Neue", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  --radius-cards: 24px;
+  --radius-buttons: 16px;
+  --radius-inputs: 14px;
+}
+
+@layer base {
+  :root {
+    --background: #09090B;
+    --foreground: #FAFAFA;
+  }
+
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+
+  html.lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  html.lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  html.lenis.lenis-scrolling iframe {
+    pointer-events: none;
+  }
+
+  section[id] {
+    scroll-margin-top: 7.5rem;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: 0.05em;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(17, 17, 17, 0.5);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .bg-hero-gradient {
+    background: linear-gradient(135deg, #FF4D00, #FF7A18);
+  }
+
+  .bg-button-gradient {
+    background: linear-gradient(135deg, #FF4D00, #FFD700);
+  }
+
+  .text-gradient {
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-image: linear-gradient(135deg, #FF4D00, #FFD700);
+  }
+}
