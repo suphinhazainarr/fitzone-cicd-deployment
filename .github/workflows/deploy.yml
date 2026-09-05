@@ -36,6 +36,13 @@ jobs:
       - name: Build
         run: pnpm build
 
+      - name: Show GitHub identity
+        run: |
+          echo "Repository: ${{ github.repository }}"
+          echo "Ref: ${{ github.ref }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Event: ${{ github.event_name }}"
+
       # 6. Authenticate GitHub Actions with AWS using OIDC
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
