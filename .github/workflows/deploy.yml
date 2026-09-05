@@ -1,0 +1,52 @@
+name: Deploy FitZone
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Get the code from GitHub
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. Install pnpm
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      # 3. Install project dependencies
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # 4. Check the code
+      - name: Lint
+        run: pnpm lint
+
+      # 5. Build the React/Vite application
+      - name: Build
+        run: pnpm build
+
+      # 6. Authenticate GitHub Actions with AWS using OIDC
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::254618531962:role/FitZoneGitHubActionsRole
+          aws-region: us-west-2
+
+      # 7. Upload the production files to S3
+      - name: Deploy to S3
+        run: aws s3 sync dist/ s3://fitzone-suphin-2026 --delete
+
+      # 8. Clear CloudFront cache
+      - name: Invalidate CloudFront
+        run: aws cloudfront create-invalidation --distribution-id E2FPM31ST6OX0Z --paths "/*"
